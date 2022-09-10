@@ -365,4 +365,27 @@ class JinyaClient {
 
     return response.data;
   }
+
+  /// Gets the details of the current artist
+  Future<Artist> getArtistInfo() async {
+    final response = await _get('/api/me');
+
+    return Artist.fromJson(jsonDecode(response.data));
+  }
+
+  /// Updates the about me info of the current artist
+  Future<void> updateAboutMe(String email, String artistName, String aboutMe) async {
+    await _put('/api/me', data: {
+      'email': email,
+      'artistName': artistName,
+      'aboutMe': aboutMe,
+    });
+  }
+
+  /// Sets the color scheme the current user prefers
+  Future<void> updateColorScheme(ColorScheme colorScheme) async {
+    await _put('/api/me/colorscheme',data: {
+      'colorScheme': colorScheme.toString(),
+    });
+  }
 }
