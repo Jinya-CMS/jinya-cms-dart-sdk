@@ -1,0 +1,1 @@
+class NotEnoughPermissionsException implements Exception {}

@@ -1,0 +1,1 @@
+class MissingApiKeyException implements Exception {}
