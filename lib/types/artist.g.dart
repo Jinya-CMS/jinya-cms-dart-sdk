@@ -13,12 +13,23 @@ Artist _$ArtistFromJson(Map<String, dynamic> json) => Artist(
       profilePicture: json['profilePicture'] as String?,
       roles:
           (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList(),
-    );
+    )
+      ..aboutMe = json['aboutMe'] as String?
+      ..colorScheme =
+          $enumDecodeNullable(_$ColorSchemeEnumMap, json['colorScheme']);
 
 Map<String, dynamic> _$ArtistToJson(Artist instance) => <String, dynamic>{
       'id': instance.id,
       'artistName': instance.artistName,
       'email': instance.email,
       'profilePicture': instance.profilePicture,
+      'aboutMe': instance.aboutMe,
       'roles': instance.roles,
+      'colorScheme': _$ColorSchemeEnumMap[instance.colorScheme],
     };
+
+const _$ColorSchemeEnumMap = {
+  ColorScheme.dark: 'dark',
+  ColorScheme.light: 'light',
+  ColorScheme.auto: 'auto',
+};

@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'dart:io';
+import 'dart:io' as io;
+import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:jinya_cms/types/api_key.dart';
+import 'package:jinya_cms/types/artist.dart';
 import 'package:jinya_cms/types/known_device.dart';
 
 import '../errors/MissingFieldException.dart';
@@ -27,15 +29,15 @@ class _JinyaResponse {
     }
     _response.statusCode = response.statusCode;
 
-    if (response.statusCode == HttpStatus.badRequest) {
+    if (response.statusCode == io.HttpStatus.badRequest) {
       throw MissingFieldsException(_response.data['validation'].keys);
-    } else if (response.statusCode == HttpStatus.unauthorized) {
+    } else if (response.statusCode == io.HttpStatus.unauthorized) {
       throw MissingApiKeyException();
-    } else if (response.statusCode == HttpStatus.notFound) {
+    } else if (response.statusCode == io.HttpStatus.notFound) {
       throw NotFoundException();
-    } else if (response.statusCode == HttpStatus.forbidden) {
+    } else if (response.statusCode == io.HttpStatus.forbidden) {
       throw NotEnoughPermissionsException();
-    } else if (response.statusCode == HttpStatus.conflict) {
+    } else if (response.statusCode == io.HttpStatus.conflict) {
       throw ConflictException();
     }
 
@@ -71,7 +73,7 @@ class JinyaClient {
     final response = await http.post(
       Uri.parse('$_jinyaUrl/$path'),
       headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
+        io.HttpHeaders.contentTypeHeader: 'application/json',
         'JinyaApiKey': _apiKey,
         ...additionalHeaders,
       },
@@ -106,7 +108,7 @@ class JinyaClient {
     final response = await http.put(
       Uri.parse('$_jinyaUrl/$path'),
       headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
+        io.HttpHeaders.contentTypeHeader: 'application/json',
         'JinyaApiKey': _apiKey,
         ...additionalHeaders,
       },
@@ -140,7 +142,7 @@ class JinyaClient {
     final response = await http.get(
       Uri.parse('$_jinyaUrl/$path'),
       headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
+        io.HttpHeaders.contentTypeHeader: 'application/json',
         'JinyaApiKey': _apiKey,
         ...additionalHeaders,
       },
@@ -156,7 +158,7 @@ class JinyaClient {
     final response = await http.head(
       Uri.parse('$_jinyaUrl/$path'),
       headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
+        io.HttpHeaders.contentTypeHeader: 'application/json',
         'JinyaApiKey': _apiKey,
         ...additionalHeaders,
       },
@@ -172,7 +174,7 @@ class JinyaClient {
     final response = await http.delete(
       Uri.parse('$_jinyaUrl/$path'),
       headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
+        io.HttpHeaders.contentTypeHeader: 'application/json',
         'JinyaApiKey': _apiKey,
         ...additionalHeaders,
       },
@@ -271,6 +273,7 @@ class JinyaClient {
   Future<Iterable<KnownDevice>> getKnownDevices() async {
     final response = await _get('/api/known_device');
     final result = jsonDecode(response.data);
+
     return result['items'].map((e) => KnownDevice.fromJson(e));
   }
 
@@ -283,5 +286,83 @@ class JinyaClient {
     } catch (e) {
       return false;
     }
+  }
+
+  /// Gets all artists
+  Future<Iterable<Artist>> getArtists() async {
+    final response = await _get('/api/artist');
+    final result = jsonDecode(response.data);
+
+    return result['items'].map((e) => Artist.fromJson(e));
+  }
+
+  /// Gets the artist with the given id
+  Future<Artist> getArtistById(int id) async {
+    final response = await _get('/api/artist/$id');
+
+    return Artist.fromJson(jsonDecode(response.data));
+  }
+
+  /// Creates a new artist
+  Future<Artist> createArtist(
+    String artistName,
+    String email,
+    String password, {
+    bool enabled = true,
+    bool isReader = true,
+    bool isWriter = true,
+    bool isAdmin = false,
+  }) async {
+    final roles = <String>[];
+    if (isReader) {
+      roles.add('ROLE_READER');
+    }
+    if (isWriter) {
+      roles.add('ROLE_WRITER');
+    }
+    if (isAdmin) {
+      roles.add('ROLE_ADMIN');
+    }
+    final response = await _post('/api/artist', data: {
+      'artistName': artistName,
+      'email': email,
+      'enabled': enabled,
+      'password': password,
+      'roles': roles,
+    });
+
+    return Artist.fromJson(response.data);
+  }
+
+  /// Updates the given artist
+  Future<void> updateArtist(Artist artist) async {
+    await _put('/api/artist/${artist.id}');
+  }
+
+  /// Deletes the given artist by id
+  Future<void> deleteArtist(int id) async {
+    await _delete('/api/artist/$id');
+  }
+
+  /// Activates the given artist by id
+  Future<void> activateArtist(int id) async {
+    await _put('/api/artist/$id/activation');
+  }
+
+  /// Deactivates the given artist by id
+  Future<void> deactivateArtist(int id) async {
+    await _delete('/api/artist/$id/activation');
+  }
+
+  /// Uploads a new profile picture for the given artist
+  Future<void> uploadProfilePicture(int id, io.File file) async {
+    await _putRaw('/api/artist/$id/profilepicture', data: file);
+  }
+
+  /// Deletes the profile picture of the given artist
+  Future<Uint8List> getProfilePicture(int id) async {
+    final response = await _get('/api/artist/$id/profilepicture');
+
+    return response.data;
   }
 }

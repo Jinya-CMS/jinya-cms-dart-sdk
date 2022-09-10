@@ -2,13 +2,25 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'artist.g.dart';
 
+@JsonEnum()
+enum ColorScheme {
+  @JsonValue('dark')
+  dark,
+  @JsonValue('light')
+  light,
+  @JsonValue('auto')
+  auto,
+}
+
 @JsonSerializable()
 class Artist {
   int? id;
   String? artistName;
   String? email;
   String? profilePicture;
+  String? aboutMe;
   List<String>? roles;
+  ColorScheme? colorScheme;
 
   Artist({
     this.id,
