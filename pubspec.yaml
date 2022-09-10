@@ -1,14 +1,10 @@
-name: jinya_cms_dart_sdk
-description: A sample command-line application.
+name: jinya_cms
+description: Implementation of the Jinya API written in Dart for use with Flutter and other Dart apps
 version: 1.0.0
-# homepage: https://www.example.com
+homepage: https://github.com/Jinya-CMS/jinya-dart-sdk
 
 environment:
   sdk: '>=2.17.7 <3.0.0'
 
-# dependencies:
-#   path: ^1.8.0
-
 dev_dependencies:
   lints: ^2.0.0
-  test: ^1.16.0
