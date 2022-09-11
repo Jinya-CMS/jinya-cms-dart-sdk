@@ -22,5 +22,10 @@ class BlogCategory {
 
   factory BlogCategory.fromJson(Map<String, dynamic> json) => _$BlogCategoryFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BlogCategoryToJson(this);
+  Map<String, dynamic> toJson() {
+    final data = _$BlogCategoryToJson(this);
+    data['parentId'] = parent?.id;
+
+    return data;
+  }
 }

@@ -5,26 +5,25 @@ import 'dart:io' as io;
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
-import 'package:jinya_cms/types/api_key.dart';
-import 'package:jinya_cms/types/artist.dart';
-import 'package:jinya_cms/types/known_device.dart';
 
 import '../errors/MissingFieldException.dart';
 import '../errors/MissingApiKeyException.dart';
 import '../errors/NotFoundException.dart';
 import '../errors/NotEnoughPermissionsException.dart';
 import '../errors/ConflictException.dart';
-import '../types/login_data.dart';
+import '../types/types.dart';
 
 class _JinyaResponse {
-  dynamic data;
+  late Map<String, dynamic> data;
   int statusCode = 204;
+  late http.Response response;
 
   _JinyaResponse();
 
   factory _JinyaResponse.fromHttpResponse(http.Response response) {
     final _response = _JinyaResponse();
-    if (response.body != '') {
+    _response.response = response;
+    if (response.headers[io.HttpHeaders.contentTypeHeader] == 'application/json') {
       _response.data = jsonDecode(response.body);
     }
     _response.statusCode = response.statusCode;
@@ -211,7 +210,7 @@ class JinyaClient {
     }
 
     if (response != null) {
-      return LoginData.fromJson(jsonDecode(response.data));
+      return LoginData.fromJson(response.data);
     }
 
     throw MissingFieldsException(['twoFactorCode']);
@@ -243,8 +242,8 @@ class JinyaClient {
   /// Gets all api keys for the current user
   Future<Iterable<ApiKey>> getApiKeys() async {
     final response = await _get('/api/api_key');
-    final result = jsonDecode(response.data);
-    return result['items'].map((e) => ApiKey.fromJson(e));
+
+    return response.data['items'].map((e) => ApiKey.fromJson(e));
   }
 
   /// Invalidates the given api key
@@ -272,9 +271,8 @@ class JinyaClient {
   /// Gets all known devices for the current user
   Future<Iterable<KnownDevice>> getKnownDevices() async {
     final response = await _get('/api/known_device');
-    final result = jsonDecode(response.data);
 
-    return result['items'].map((e) => KnownDevice.fromJson(e));
+    return response.data['items'].map((e) => KnownDevice.fromJson(e));
   }
 
   /// Invalidates the given known device
@@ -291,16 +289,15 @@ class JinyaClient {
   /// Gets all artists
   Future<Iterable<Artist>> getArtists() async {
     final response = await _get('/api/artist');
-    final result = jsonDecode(response.data);
 
-    return result['items'].map((e) => Artist.fromJson(e));
+    return response.data['items'].map((e) => Artist.fromJson(e));
   }
 
   /// Gets the artist with the given id
   Future<Artist> getArtistById(int id) async {
     final response = await _get('/api/artist/$id');
 
-    return Artist.fromJson(jsonDecode(response.data));
+    return Artist.fromJson(response.data);
   }
 
   /// Creates a new artist
@@ -363,14 +360,14 @@ class JinyaClient {
   Future<Uint8List> getProfilePicture(int id) async {
     final response = await _get('/api/artist/$id/profilepicture');
 
-    return response.data;
+    return response.response.bodyBytes;
   }
 
   /// Gets the details of the current artist
   Future<Artist> getArtistInfo() async {
     final response = await _get('/api/me');
 
-    return Artist.fromJson(jsonDecode(response.data));
+    return Artist.fromJson(response.data);
   }
 
   /// Updates the about me info of the current artist
@@ -384,8 +381,129 @@ class JinyaClient {
 
   /// Sets the color scheme the current user prefers
   Future<void> updateColorScheme(ColorScheme colorScheme) async {
-    await _put('/api/me/colorscheme',data: {
+    await _put('/api/me/colorscheme', data: {
       'colorScheme': colorScheme.toString(),
     });
+  }
+
+  /// Gets all blog categories
+  Future<Iterable<BlogCategory>> getBlogCategories() async {
+    final response = await _get('/api/blog/category');
+
+    return response.data['items'].map((e) => BlogCategory.fromJson(e));
+  }
+
+  /// Gets a blog category by id
+  Future<BlogCategory> getBlogCategoryById(int id) async {
+    final response = await _get('/api/blog/category/$id');
+
+    return BlogCategory.fromJson(response.data);
+  }
+
+  /// Creates a new blog category with the given data
+  Future<BlogCategory> createBlogCategory(
+    String name,
+    String description,
+    int parentId,
+    bool webhookEnabled,
+    String webhookUrl,
+  ) async {
+    final response = await _post('/api/blog/category', data: {
+      'name': name,
+      'description': description,
+      'parentId': parentId,
+      'webhookEnabled': webhookEnabled,
+      'webhookUrl': webhookUrl,
+    });
+
+    return BlogCategory.fromJson(response.data);
+  }
+
+  /// Updates the given blog category
+  Future<void> updateBlogCategory(BlogCategory blogCategory) async {
+    await _put('/api/blog/category/${blogCategory.id}', data: blogCategory.toJson());
+  }
+
+  /// Deletes the given blog category
+  Future<void> deleteBlogCategory(int id) async {
+    await _delete('/api/blog/category/$id');
+  }
+
+  /// Gets all blog posts, optionally filtered by category
+  Future<Iterable<BlogPost>> getBlogPosts({int? categoryId}) async {
+    var url = '/api/blog/post';
+
+    if (categoryId != null) {
+      url = '/api/blog/category/$categoryId/post';
+    }
+
+    final response = await _get(url);
+
+    return response.data['items'].map((e) => BlogPost.fromJson(e));
+  }
+
+  /// Gets a blog post by id
+  Future<BlogPost> getBlogPost(int id) async {
+    final response = await _get('/api/blog/post/$id');
+
+    return BlogPost.fromJson(response.data);
+  }
+
+  /// Creates a new blog post with the given data
+  Future<BlogPost> createBlogPost(
+    String title,
+    String slug,
+    int headerImageId,
+    int categoryId,
+  ) async {
+    final response = await _post('/api/blog/post', data: {
+      'title': title,
+      'slug': slug,
+      'headerImageId': headerImageId,
+      'categoryId': categoryId,
+    });
+
+    return BlogPost.fromJson(response.data);
+  }
+
+  /// Updates the given blog post
+  Future<void> updateBlogPost(BlogPost blogPost) async {
+    await _put('/api/blog/post/${blogPost.id}', data: blogPost.toJson());
+  }
+
+  /// Deletes the given blog post
+  Future<void> deleteBlogPost(int id) async {
+    await _delete('/api/blog/post/$id');
+  }
+
+  /// Gets the segments of the given blog post
+  Future<Iterable<BlogPostSegment>> getBlogPostSegments(int postId) async {
+    final response = await _get('/api/blog/post/$postId/segment');
+
+    return response.data['items'].map((e) => BlogPostSegment.fromJson(e));
+  }
+
+  /// Batch replaces all blog post segments with the list of segments
+  Future<void> batchReplaceBlogPostSegments(int postId, Iterable<BlogPostSegment> segments) async {
+    final postData = {
+      'segments': segments.map((e) {
+        final data = <String, dynamic>{
+          'position': e.position,
+          'blogPostId': postId,
+        };
+        if (e.file != null) {
+          data['fileId'] = e.file!.id;
+          data['link'] = e.link;
+        } else if (e.gallery != null) {
+          data['galleryId'] = e.gallery!.id;
+        } else {
+          data['html'] = e.html ?? '';
+        }
+
+        return data;
+      }),
+    };
+
+    await _put('/api/blog/post/$postId/segment', data: postData);
   }
 }

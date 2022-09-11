@@ -28,5 +28,11 @@ class BlogPost {
 
   factory BlogPost.fromJson(Map<String, dynamic> json) => _$BlogPostFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BlogPostToJson(this);
+  Map<String, dynamic> toJson() {
+    final data = _$BlogPostToJson(this);
+    data['headerImageId'] = headerImage?.id;
+    data['categoryId'] = category?.id;
+
+    return data;
+  }
 }
