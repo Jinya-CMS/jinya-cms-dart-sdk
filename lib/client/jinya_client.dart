@@ -443,7 +443,7 @@ class JinyaClient {
   }
 
   /// Gets a blog post by id
-  Future<BlogPost> getBlogPost(int id) async {
+  Future<BlogPost> getBlogPostById(int id) async {
     final response = await _get('/api/blog/post/$id');
 
     return BlogPost.fromJson(response.data);
@@ -505,5 +505,51 @@ class JinyaClient {
     };
 
     await _put('/api/blog/post/$postId/segment', data: postData);
+  }
+
+  /// Gets all files
+  Future<Iterable<File>> getFiles() async {
+    final response = await _get('/api/media/file');
+
+    return response.data['items'].map((e) => File.fromJson(e));
+  }
+
+  /// Gets the file with the given id
+  Future<File> getFileById(int id) async {
+    final response = await _get('/api/media/file/$id');
+
+    return File.fromJson(response.data);
+  }
+
+  /// Creates a new file with the given name
+  Future<File> createFile(String name) async {
+    final response = await _post('/api/media/file', data: {'name': name});
+
+    return File.fromJson(response.data);
+  }
+
+  /// Starts the file upload
+  Future<void> startFileUpload(int id) async {
+    await _put('/api/media/file/$id/content');
+  }
+
+  /// Uploads a file chunk
+  Future<void> uploadFileChunk(int id, int position, Uint8List chunk) async {
+    await _putRaw('/api/media/file/$id/content/$position', data: chunk);
+  }
+
+  /// Finishes the file upload
+  Future<void> finishFileUpload(int id) async {
+    await _put('/api/media/file/$id/content/finish');
+  }
+
+  /// Updates the given file
+  Future<void> updateFile(File file) async {
+    await _put('/api/media/file/${file.id}', data: {'name': file.name});
+  }
+
+  /// Deletes the given file
+  Future<void> deleteFile(int id) async {
+    await _delete('/api/media/file/$id');
   }
 }
