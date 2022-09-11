@@ -82,23 +82,6 @@ class JinyaClient {
     return _JinyaResponse.fromHttpResponse(response);
   }
 
-  Future<_JinyaResponse> _postRaw(
-    String path, {
-    Map<String, String> additionalHeaders = const {},
-    data,
-  }) async {
-    final response = await http.post(
-      Uri.parse('$_jinyaUrl/$path'),
-      headers: {
-        'JinyaApiKey': _apiKey,
-        ...additionalHeaders,
-      },
-      body: _prepareBody(data),
-    );
-
-    return _JinyaResponse.fromHttpResponse(response);
-  }
-
   Future<_JinyaResponse> _put(
     String path, {
     Map<String, String> additionalHeaders = const {},
@@ -609,5 +592,91 @@ class JinyaClient {
   /// Creates a new gallery file position
   Future<void> createGalleryFilePosition(int galleryId, int position, int fileId) async {
     await _post('/api/media/gallery/$galleryId/file', data: {'position': position, 'file': fileId});
+  }
+
+  /// Gets all forms
+  Future<Iterable<Form>> getForms() async {
+    final response = await _get('/api/form');
+
+    return response.data['items'].map((e) => Form.fromJson(e));
+  }
+
+  /// Gets form by id
+  Future<Form> getFormById(int id) async {
+    final response = await _get('/api/form/$id');
+
+    return Form.fromJson(response.data);
+  }
+
+  /// Creates a new form with the given data
+  Future<Form> createForm(String description, String title, String toAddress) async {
+    final response = await _post('/api/form', data: {
+      'description': description,
+      'title': title,
+      'toAddress': toAddress,
+    });
+
+    return Form.fromJson(response.data);
+  }
+
+  /// Updates the given form
+  Future<void> updateForm(Form form) async {
+    await _put('/api/form/${form.id}', data: form.toJson());
+  }
+
+  /// Deletes the form with the given id
+  Future<void> deleteForm(int id) async {
+    await _delete('/api/form/$id');
+  }
+
+  /// Gets all form items for the given form
+  Future<Iterable<FormItem>> getFormItems(int formId) async {
+    final response = await _get('/api/form/$formId/item');
+
+    return response.data['items'].map((e) => FormItem.fromJson(e));
+  }
+
+  /// Deletes the form item in the given form at the given position
+  Future<void> deleteFromItem(int formId, int position) async {
+    await _delete('/api/form/$formId/item/$position');
+  }
+
+  /// Creates a new form item
+  Future<FormItem> createFormItem(
+    int formId,
+    String type,
+    int position,
+    String label, {
+    String placeholder = '',
+    String helpText = '',
+    bool isRequired = false,
+    bool isFromAddress = false,
+    bool isSubject = false,
+    Iterable<String> options = const <String>[],
+    Iterable<String> spamFilter = const <String>[],
+  }) async {
+    final response = await _post('/api/form/$formId/item/$position', data: {
+      'type': type,
+      'label': label,
+      'placeholder': placeholder,
+      'helpText': helpText,
+      'isRequired': isRequired,
+      'isFromAddress': isFromAddress,
+      'isSubject': isSubject,
+      'options': options,
+      'spamFilter': spamFilter,
+    });
+
+    return FormItem.fromJson(response.data);
+  }
+
+  /// Updates the given form item
+  Future<void> updateFormItem(int formId, FormItem formItem) async {
+    await _post('/api/form/$formId/item/${formItem.position}', data: formItem.toJson());
+  }
+
+  /// Moves the form item in the given form at the given position to the new position
+  Future<void> moveFormItem(int formId, int oldPosition, int newPosition) async {
+    await _post('/api/form/$formId/item/$oldPosition', data: {'newPosition': newPosition});
   }
 }
