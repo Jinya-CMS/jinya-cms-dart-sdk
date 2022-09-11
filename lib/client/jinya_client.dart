@@ -829,4 +829,38 @@ class JinyaClient {
   Future<void> moveMenuItemToNewParent(int itemId, int newParentId) async {
     await _put('/api/menu-item/$itemId/move/parent/to/item/$newParentId');
   }
+
+  /// Gets all simple pages
+  Future<Iterable<SimplePage>> getSimplePages() async {
+    final response = await _get('/api/simple-page');
+
+    return response.data['items'].map((e) => SimplePage.fromJson(e));
+  }
+
+  /// Gets the simple page by id
+  Future<SimplePage> getSimplePageById(int id) async {
+    final response = await _get('/api/simple-page/$id');
+
+    return SimplePage.fromJson(response.data);
+  }
+
+  /// Creates a new simple page with the given data
+  Future<SimplePage> createSimplePage(String title, String content) async {
+    final response = await _post('/api/simple-page', data: {
+      'title': title,
+      'content': content,
+    });
+
+    return SimplePage.fromJson(response.data);
+  }
+
+  /// Updates the given simple page
+  Future<void> updateSimplePage(SimplePage page) async {
+    await _put('/api/simple-page/${page.id}', data: page.toJson());
+  }
+
+  /// Deletes the simple page with the given id
+  Future<void> deleteSimplePage(int id) async {
+    await _delete('/api/simple-page/$id');
+  }
 }
