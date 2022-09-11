@@ -552,4 +552,62 @@ class JinyaClient {
   Future<void> deleteFile(int id) async {
     await _delete('/api/media/file/$id');
   }
+
+  /// Gets all galleries
+  Future<Iterable<Gallery>> getGalleries() async {
+    final response = await _get('/api/media/gallery');
+
+    return response.data['items'].map((e) => Gallery.fromJson(e));
+  }
+
+  /// Gets the gallery with the given id
+  Future<Gallery> getGallery(int id) async {
+    final response = await _get('/api/media/gallery/$id');
+
+    return Gallery.fromJson(response.data);
+  }
+
+  /// Creates the gallery with the given data
+  Future<Gallery> createGallery(String name, String description, Orientation orientation, Type type) async {
+    final response = await _post('/api/media/gallery', data: {
+      'name': name,
+      'description': description,
+      'orientation': orientation,
+      'type': type,
+    });
+
+    return Gallery.fromJson(response.data);
+  }
+
+  /// Updates the given gallery
+  Future<void> updateGallery(Gallery gallery) async {
+    await _put('/api/media/gallery/${gallery.id}', data: gallery.toJson());
+  }
+
+  /// Deletes the given gallery
+  Future<void> deleteGallery(int id) async {
+    await _delete('/api/media/gallery/$id');
+  }
+
+  /// Gets all gallery file positions for the given gallery
+  Future<Iterable<GalleryFilePosition>> getGalleryFilePositions(int galleryId) async {
+    final response = await _get('/api/media/gallery/$galleryId/file');
+
+    return response.data['items'].map((e) => GalleryFilePosition.fromJson(e));
+  }
+
+  /// Deletes the gallery file position from the given gallery at the given position
+  Future<void> deleteGalleryFilePosition(int galleryId, int position) async {
+    await _delete('/api/media/gallery/$galleryId/file/$position');
+  }
+
+  /// Moves the gallery file position to the new position
+  Future<void> moveGalleryFilePosition(int galleryId, int oldPosition, int newPosition) async {
+    await _put('/api/media/gallery/$galleryId/file/$oldPosition', data: {'newPosition': newPosition});
+  }
+
+  /// Creates a new gallery file position
+  Future<void> createGalleryFilePosition(int galleryId, int position, int fileId) async {
+    await _post('/api/media/gallery/$galleryId/file', data: {'position': position, 'file': fileId});
+  }
 }
