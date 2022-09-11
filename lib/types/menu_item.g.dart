@@ -99,6 +99,8 @@ MenuItem _$MenuItemFromJson(Map<String, dynamic> json) => MenuItem(
           ? null
           : MenuSegmentPage.fromJson(
               json['segmentPage'] as Map<String, dynamic>),
+      items: (json['items'] as List<dynamic>?)
+          ?.map((e) => MenuItem.fromJson(e as Map<String, dynamic>)),
     );
 
 Map<String, dynamic> _$MenuItemToJson(MenuItem instance) => <String, dynamic>{
@@ -114,4 +116,5 @@ Map<String, dynamic> _$MenuItemToJson(MenuItem instance) => <String, dynamic>{
       'category': instance.category,
       'gallery': instance.gallery,
       'segmentPage': instance.segmentPage,
+      'items': instance.items?.toList(),
     };

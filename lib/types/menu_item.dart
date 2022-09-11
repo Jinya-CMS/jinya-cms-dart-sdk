@@ -108,6 +108,7 @@ class MenuItem {
   MenuCategory? category;
   MenuGallery? gallery;
   MenuSegmentPage? segmentPage;
+  Iterable<MenuItem>? items;
 
   MenuItem({
     this.id,
@@ -122,6 +123,7 @@ class MenuItem {
     this.category,
     this.gallery,
     this.segmentPage,
+    this.items,
   });
 
   factory MenuItem.fromJson(Map<String, dynamic> json) => _$MenuItemFromJson(json);

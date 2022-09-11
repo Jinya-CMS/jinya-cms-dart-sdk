@@ -679,4 +679,154 @@ class JinyaClient {
   Future<void> moveFormItem(int formId, int oldPosition, int newPosition) async {
     await _post('/api/form/$formId/item/$oldPosition', data: {'newPosition': newPosition});
   }
+
+  /// Gets all menus
+  Future<Iterable<Menu>> getMenus() async {
+    final response = await _get('/api/menu');
+
+    return response.data['items'].map((e) => Menu.fromJson(e));
+  }
+
+  /// Gets the menu with the given id
+  Future<Menu> getMenuById(int id) async {
+    final response = await _get('/api/menu/$id');
+
+    return Menu.fromJson(response.data);
+  }
+
+  /// Creates a new menu with the given data
+  Future<Menu> createMenu(String name, int logoId) async {
+    final response = await _post('/api/menu', data: {
+      'name': name,
+      'logo': logoId,
+    });
+
+    return Menu.fromJson(response.data);
+  }
+
+  /// Updates the given menu
+  Future<void> updateMenu(Menu menu) async {
+    await _put('/api/menu/${menu.id}', data: menu.toJson());
+  }
+
+  /// Deletes the given menu
+  Future<void> deleteMenu(int id) async {
+    await _delete('/api/menu/$id');
+  }
+
+  /// Gets all menu items for the given menu
+  Future<Iterable<MenuItem>> getMenuItems(int menuId) async {
+    final response = await _get('/api/menu/$menuId/item');
+
+    return response.data['items'].map((e) => MenuItem.fromJson(e));
+  }
+
+  /// Creates a new menu item with the given menu as parent
+  Future<MenuItem> createMenuItemByMenu(
+    int menuId,
+    String route,
+    int position,
+    String title, {
+    int? artist,
+    int? form,
+    int? page,
+    int? segmentPage,
+    int? gallery,
+    int? category,
+    bool? blogHomePage,
+    bool? highlighted,
+  }) async {
+    final response = await _post('/api/menu/$menuId/item', data: {
+      'route': route,
+      'position': position,
+      'title': title,
+      'artist': artist,
+      'form': form,
+      'page': page,
+      'segmentPage': segmentPage,
+      'gallery': gallery,
+      'category': category,
+      'blogHomePage': blogHomePage,
+      'highlighted': highlighted,
+    });
+
+    return MenuItem.fromJson(response.data);
+  }
+
+  /// Creates a new menu item with the given menu item as parent
+  Future<MenuItem> createMenuItemByMenuItem(
+    int parentId,
+    String route,
+    int position,
+    String title, {
+    int? artist,
+    int? form,
+    int? page,
+    int? segmentPage,
+    int? gallery,
+    int? category,
+    bool? blogHomePage,
+    bool? highlighted,
+  }) async {
+    final response = await _post('/api/menu-item/$parentId/item', data: {
+      'route': route,
+      'position': position,
+      'title': title,
+      'artist': artist,
+      'form': form,
+      'page': page,
+      'segmentPage': segmentPage,
+      'gallery': gallery,
+      'category': category,
+      'blogHomePage': blogHomePage,
+      'highlighted': highlighted,
+    });
+
+    return MenuItem.fromJson(response.data);
+  }
+
+  /// Updates the given menu item with the given values
+  Future<void> updateMenuItem(
+    int itemId, {
+    String? route,
+    int? position,
+    String? title,
+    int? artist,
+    int? form,
+    int? page,
+    int? segmentPage,
+    int? gallery,
+    int? category,
+    bool? blogHomePage,
+    bool? highlighted,
+  }) async {
+    await _put('/api/menu-item/$itemId/item', data: {
+      'route': route,
+      'position': position,
+      'title': title,
+      'artist': artist,
+      'form': form,
+      'page': page,
+      'segmentPage': segmentPage,
+      'gallery': gallery,
+      'category': category,
+      'blogHomePage': blogHomePage,
+      'highlighted': highlighted,
+    });
+  }
+
+  /// Deletes the given menu item
+  Future<void> deleteMenuItem(int itemId) async {
+    await _delete('/api/menu-item/$itemId');
+  }
+
+  /// Moves the given menu item one level up in the menu tree
+  Future<void> moveMenuItemParentOneLevelUp(int menuId, int itemId) async {
+    await _put('/api/menu/$menuId/item/$itemId/move/parent/one/level/up');
+  }
+
+  /// Moves the given menu item to the new parent
+  Future<void> moveMenuItemToNewParent(int itemId, int newParentId) async {
+    await _put('/api/menu-item/$itemId/move/parent/to/item/$newParentId');
+  }
 }
