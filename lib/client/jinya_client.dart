@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io' as io;
@@ -6,11 +5,11 @@ import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 
-import '../errors/MissingFieldException.dart';
-import '../errors/MissingApiKeyException.dart';
-import '../errors/NotFoundException.dart';
-import '../errors/NotEnoughPermissionsException.dart';
-import '../errors/ConflictException.dart';
+import '../errors/missing_field_exception.dart';
+import '../errors/missing_api_key_exception.dart';
+import '../errors/not_found_exception.dart';
+import '../errors/not_enough_permissions_exception.dart';
+import '../errors/conflict_exception.dart';
 import '../types/types.dart';
 
 class _JinyaResponse {
@@ -21,15 +20,15 @@ class _JinyaResponse {
   _JinyaResponse();
 
   factory _JinyaResponse.fromHttpResponse(http.Response response) {
-    final _response = _JinyaResponse();
-    _response.response = response;
+    final jinyaResponse = _JinyaResponse();
+    jinyaResponse.response = response;
     if (response.headers[io.HttpHeaders.contentTypeHeader] == 'application/json') {
-      _response.data = jsonDecode(response.body);
+      jinyaResponse.data = jsonDecode(response.body);
     }
-    _response.statusCode = response.statusCode;
+    jinyaResponse.statusCode = response.statusCode;
 
     if (response.statusCode == io.HttpStatus.badRequest) {
-      throw MissingFieldsException(_response.data['validation'].keys);
+      throw MissingFieldsException(jinyaResponse.data['validation'].keys);
     } else if (response.statusCode == io.HttpStatus.unauthorized) {
       throw MissingApiKeyException();
     } else if (response.statusCode == io.HttpStatus.notFound) {
@@ -40,7 +39,7 @@ class _JinyaResponse {
       throw ConflictException();
     }
 
-    return _response;
+    return jinyaResponse;
   }
 }
 
@@ -203,6 +202,7 @@ class JinyaClient {
   Future<void> logout() async {
     try {
       await _delete('/api/api_key/$_apiKey');
+      // ignore: empty_catches
     } catch (e) {}
   }
 
@@ -862,5 +862,78 @@ class JinyaClient {
   /// Deletes the simple page with the given id
   Future<void> deleteSimplePage(int id) async {
     await _delete('/api/simple-page/$id');
+  }
+
+  /// Gets all segment pages
+  Future<Iterable<SegmentPage>> getSegmentPages() async {
+    final response = await _get('/api/segment-page');
+
+    return response.data['items'].map((e) => SegmentPage.fromJson(e));
+  }
+
+  /// Gets the segment page by id
+  Future<SegmentPage> getSegmentPageById(int id) async {
+    final response = await _get('/api/segment-page/$id');
+
+    return SegmentPage.fromJson(response.data);
+  }
+
+  /// Creates a new segment page with the given data
+  Future<SegmentPage> createSegmentPage(String name) async {
+    final response = await _post('/api/segment-page', data: {
+      'name': name,
+    });
+
+    return SegmentPage.fromJson(response.data);
+  }
+
+  /// Updates the segment page
+  Future<void> updateSegmentPage(SegmentPage page) async {
+    await _put('/api/segment-page/${page.id}', data: page.toJson());
+  }
+
+  /// Deletes the segment page
+  Future<void> deleteSegmentPage(int id) async {
+    await _delete('/api/segment-page/$id');
+  }
+
+  /// Gets the segments for the given page
+  Future<Iterable<Segment>> getSegmentsByPage(int pageId) async {
+    final response = await _get('/api/segment-page/$pageId/segment');
+
+    return response.data['items'].map((e) => Segment.fromJson(e));
+  }
+
+  /// Creates a new segment for the given page
+  Future<Segment> createSegment(int pageId, SegmentType type, Segment segment) async {
+    var segmentType = '';
+    switch (type) {
+      case SegmentType.file:
+        segmentType = 'file';
+        break;
+      case SegmentType.gallery:
+        segmentType = 'gallery';
+        break;
+      case SegmentType.html:
+        segmentType = 'html';
+        break;
+    }
+
+    final response = await _post('/api/segment-page/$pageId/segment/$segmentType', data: segment.toJson());
+
+    return Segment.fromJson(response.data);
+  }
+
+  /// Updates the given segment at the given position
+  Future<void> updateSegment(int pageId, int position, Segment segment) async {
+    final data = segment.toJson();
+    data['newPosition'] = segment.position;
+
+    await _put('/api/segment-page/$pageId/segment/$position', data: data);
+  }
+
+  /// Deletes the given segment
+  Future<void> deleteSegment(int pageId, int position) async {
+    await _delete('/api/segment-page/$pageId/segment/$position');
   }
 }

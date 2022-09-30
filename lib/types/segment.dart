@@ -5,6 +5,12 @@ import 'gallery.dart';
 
 part 'segment.g.dart';
 
+enum SegmentType {
+  file,
+  gallery,
+  html
+}
+
 @JsonSerializable()
 class Segment {
   int? position;
