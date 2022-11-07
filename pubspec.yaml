@@ -13,4 +13,4 @@ dependencies:
 dev_dependencies:
   lints: ^2.0.1
   json_serializable: 6.4.1
-  build_runner: 2.2.1
+  build_runner: ^2.2.1
