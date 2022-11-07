@@ -1,5 +1,5 @@
-import 'package:jinya_cms/types/blog_category.dart';
-import 'package:jinya_cms/types/modification.dart';
+import 'package:jinya_cms_api/types/blog_category.dart';
+import 'package:jinya_cms_api/types/modification.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'file.dart';

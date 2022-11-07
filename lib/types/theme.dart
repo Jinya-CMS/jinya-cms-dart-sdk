@@ -1,4 +1,3 @@
-import 'package:jinya_cms/jinya_cms.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'blog_category.dart';

@@ -1,5 +1,5 @@
-import 'package:jinya_cms/types/file.dart';
-import 'package:jinya_cms/types/gallery.dart';
+import 'package:jinya_cms_api/types/file.dart';
+import 'package:jinya_cms_api/types/gallery.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'gallery_file_position.g.dart';
