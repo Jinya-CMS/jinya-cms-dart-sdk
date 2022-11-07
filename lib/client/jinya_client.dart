@@ -590,8 +590,10 @@ class JinyaClient {
   }
 
   /// Creates a new gallery file position
-  Future<void> createGalleryFilePosition(int galleryId, int position, int fileId) async {
-    await _post('/api/media/gallery/$galleryId/file', data: {'position': position, 'file': fileId});
+  Future<GalleryFilePosition> createGalleryFilePosition(int galleryId, int position, int fileId) async {
+    final response = await _post('/api/media/gallery/$galleryId/file', data: {'position': position, 'file': fileId});
+
+    return GalleryFilePosition.fromJson(response.data);
   }
 
   /// Gets all forms
