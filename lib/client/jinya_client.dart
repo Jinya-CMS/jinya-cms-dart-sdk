@@ -936,4 +936,108 @@ class JinyaClient {
   Future<void> deleteSegment(int pageId, int position) async {
     await _delete('/api/segment-page/$pageId/segment/$position');
   }
+
+  /// Gets all themes
+  Future<Iterable<Theme>> getThemes() async {
+    final response = await _get('/api/theme');
+
+    return response.data['items'].map((e) => Theme.fromJson(e));
+  }
+
+  /// Uploads a new theme
+  Future<void> createTheme(String name, io.File content) async {
+    await _post('/api/theme?name=$name', data: await content.readAsBytes());
+  }
+
+  /// Updates the given theme
+  Future<void> updateTheme(int id, io.File content) async {
+    await _post('/api/theme/$id', data: await content.readAsBytes());
+  }
+
+  /// Activates the given theme
+  Future<void> activateTheme(int id) async {
+    await _post('/api/theme/$id/active');
+  }
+
+  /// Compiles the given theme
+  Future<void> compileTheme(int id) async {
+    await _post('/api/theme/$id/assets');
+  }
+
+  /// Gets the style variables for the given theme
+  Future<Map<String, String>> getStyleVariables(int id) async {
+    final response = await _get('/api/theme/$id/styling');
+
+    return response.data.cast();
+  }
+
+  /// Updates the style variables for the given theme
+  Future<void> updateStyleVariables(int id, Map<String, String> variables) async {
+    await _put('/api/theme/$id/styling', data: variables);
+  }
+
+  /// Gets the theme files of the given theme
+  Future<Iterable<ThemeFile>> getThemeFiles(int id) async {
+    final response = await _get('/api/theme/$id/file');
+
+    return response.data.keys.map((name) => ThemeFile(name: name, file: File.fromJson(response.data[name])));
+  }
+
+  /// Gets the theme simple pages of the given theme
+  Future<Iterable<ThemePage>> getThemeSimplePages(int id) async {
+    final response = await _get('/api/theme/$id/page');
+
+    return response.data.keys.map((name) => ThemePage(name: name, page: SimplePage.fromJson(response.data[name])));
+  }
+
+  /// Gets the theme segment pages of the given theme
+  Future<Iterable<ThemeSegmentPage>> getThemeSegmentPages(int id) async {
+    final response = await _get('/api/theme/$id/segment-page');
+
+    return response.data.keys
+        .map((name) => ThemeSegmentPage(name: name, segmentPage: SegmentPage.fromJson(response.data[name])));
+  }
+
+  /// Gets the theme forms of the given theme
+  Future<Iterable<ThemeForm>> getThemeForms(int id) async {
+    final response = await _get('/api/theme/$id/form');
+
+    return response.data.keys.map((name) => ThemeForm(name: name, form: Form.fromJson(response.data[name])));
+  }
+
+  /// Gets the theme menus of the given theme
+  Future<Iterable<ThemeMenu>> getThemeMenus(int id) async {
+    final response = await _get('/api/theme/$id/menu');
+
+    return response.data.keys.map((name) => ThemeMenu(name: name, menu: Menu.fromJson(response.data[name])));
+  }
+
+  /// Gets the theme galleries of the given theme
+  Future<Iterable<ThemeGallery>> getThemeGalleries(int id) async {
+    final response = await _get('/api/theme/$id/gallery');
+
+    return response.data.keys.map((name) => ThemeGallery(name: name, gallery: Gallery.fromJson(response.data[name])));
+  }
+
+  /// Gets the theme category of the given theme
+  Future<Iterable<ThemeBlogCategory>> getThemeCategories(int id) async {
+    final response = await _get('/api/theme/$id/category');
+
+    return response.data.keys
+        .map((name) => ThemeBlogCategory(name: name, blogCategory: BlogCategory.fromJson(response.data[name])));
+  }
+
+  /// Gets the theme configuration structure
+  Future<ThemeConfigurationStructure> getThemeConfigurationStructure(int id) async {
+    final response = await _get('/api/theme/$id/configuration/structure');
+
+    return ThemeConfigurationStructure.fromJson(response.data);
+  }
+
+  /// Gets the default configuration for the theme
+  Future<Map<String, Map<String, dynamic>>> getThemeDefaultConfiguration(int id) async {
+    final response = await _get('/api/theme/$id/configuration/structure');
+
+    return response.data.cast();
+  }
 }

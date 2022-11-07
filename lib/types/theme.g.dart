@@ -68,3 +68,58 @@ ThemeSegmentPage _$ThemeSegmentPageFromJson(Map<String, dynamic> json) =>
           ? null
           : SegmentPage.fromJson(json['segmentPage'] as Map<String, dynamic>),
     );
+
+ThemeConfigurationLinks _$ThemeConfigurationLinksFromJson(
+        Map<String, dynamic> json) =>
+    ThemeConfigurationLinks(
+      segmentPages: (json['segment_pages'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      menus: (json['menus'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      pages: (json['pages'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      forms: (json['forms'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      galleries: (json['galleries'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      files: (json['files'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+      blogCategories: (json['blog_categories'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
+    );
+
+ThemeConfigurationGroup _$ThemeConfigurationGroupFromJson(
+        Map<String, dynamic> json) =>
+    ThemeConfigurationGroup(
+      name: json['name'] as String?,
+      title: json['title'] as String?,
+      fields: (json['fields'] as List<dynamic>?)?.map(
+          (e) => ThemeConfigurationField.fromJson(e as Map<String, dynamic>)),
+    );
+
+ThemeConfigurationField _$ThemeConfigurationFieldFromJson(
+        Map<String, dynamic> json) =>
+    ThemeConfigurationField(
+      name: json['name'] as String?,
+      type: json['type'] as String?,
+      label: json['label'] as String?,
+    );
+
+ThemeConfigurationStructure _$ThemeConfigurationStructureFromJson(
+        Map<String, dynamic> json) =>
+    ThemeConfigurationStructure(
+      title: json['title'] as String?,
+      groups: (json['groups'] as List<dynamic>?)?.map(
+          (e) => ThemeConfigurationGroup.fromJson(e as Map<String, dynamic>)),
+      links: json['links'] == null
+          ? null
+          : ThemeConfigurationLinks.fromJson(
+              json['links'] as Map<String, dynamic>),
+    );

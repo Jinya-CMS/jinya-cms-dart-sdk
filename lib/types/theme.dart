@@ -1,6 +1,7 @@
-import 'package:jinya_cms/types/blog_category.dart';
+import 'package:jinya_cms/jinya_cms.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'blog_category.dart';
 import 'file.dart';
 import 'form.dart';
 import 'gallery.dart';
@@ -97,4 +98,55 @@ class ThemeSegmentPage {
   ThemeSegmentPage({this.name, this.segmentPage});
 
   factory ThemeSegmentPage.fromJson(Map<String, dynamic> json) => _$ThemeSegmentPageFromJson(json);
+}
+
+@JsonSerializable(createToJson: false)
+class ThemeConfigurationLinks {
+  @JsonKey(name: 'segment_pages')
+  Map<String, String>? segmentPages;
+  Map<String, String>? menus;
+  Map<String, String>? pages;
+  Map<String, String>? forms;
+  Map<String, String>? galleries;
+  Map<String, String>? files;
+  @JsonKey(name: 'blog_categories')
+  Map<String, String>? blogCategories;
+
+  ThemeConfigurationLinks(
+      {this.segmentPages, this.menus, this.pages, this.forms, this.galleries, this.files, this.blogCategories});
+
+  factory ThemeConfigurationLinks.fromJson(Map<String, dynamic> json) => _$ThemeConfigurationLinksFromJson(json);
+}
+
+@JsonSerializable(createToJson: false)
+class ThemeConfigurationGroup {
+  String? name;
+  String? title;
+  Iterable<ThemeConfigurationField>? fields;
+
+  ThemeConfigurationGroup({this.name, this.title, this.fields});
+
+  factory ThemeConfigurationGroup.fromJson(Map<String, dynamic> json) => _$ThemeConfigurationGroupFromJson(json);
+}
+
+@JsonSerializable(createToJson: false)
+class ThemeConfigurationField {
+  String? name;
+  String? type;
+  String? label;
+
+  ThemeConfigurationField({this.name, this.type, this.label});
+
+  factory ThemeConfigurationField.fromJson(Map<String, dynamic> json) => _$ThemeConfigurationFieldFromJson(json);
+}
+
+@JsonSerializable(createToJson: false)
+class ThemeConfigurationStructure {
+  String? title;
+  Iterable<ThemeConfigurationGroup>? groups;
+  ThemeConfigurationLinks? links;
+
+  ThemeConfigurationStructure({this.title, this.groups, this.links});
+
+  factory ThemeConfigurationStructure.fromJson(Map<String, dynamic> json) => _$ThemeConfigurationStructureFromJson(json);
 }
