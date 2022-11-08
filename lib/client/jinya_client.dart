@@ -37,6 +37,8 @@ class _JinyaResponse {
       throw NotEnoughPermissionsException();
     } else if (response.statusCode == io.HttpStatus.conflict) {
       throw ConflictException();
+    }else if (response.statusCode < 200 || response.statusCode>299 ){
+      throw io.HttpException(response.body);
     }
 
     return jinyaResponse;
