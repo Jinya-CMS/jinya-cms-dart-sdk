@@ -228,7 +228,7 @@ class JinyaClient {
   Future<Iterable<ApiKey>> getApiKeys() async {
     final response = await _get('/api/api_key');
 
-    return response.data['items'].map((e) => ApiKey.fromJson(e));
+    return response.data['items'].map<ApiKey>((e) => ApiKey.fromJson(e));
   }
 
   /// Invalidates the given api key
@@ -257,7 +257,7 @@ class JinyaClient {
   Future<Iterable<KnownDevice>> getKnownDevices() async {
     final response = await _get('/api/known_device');
 
-    return response.data['items'].map((e) => KnownDevice.fromJson(e));
+    return response.data['items'].map<KnownDevice>((e) => KnownDevice.fromJson(e));
   }
 
   /// Invalidates the given known device
@@ -275,7 +275,7 @@ class JinyaClient {
   Future<Iterable<Artist>> getArtists() async {
     final response = await _get('/api/artist');
 
-    return response.data['items'].map((e) => Artist.fromJson(e));
+    return response.data['items'].map<Artist>((e) => Artist.fromJson(e));
   }
 
   /// Gets the artist with the given id
@@ -375,7 +375,7 @@ class JinyaClient {
   Future<Iterable<BlogCategory>> getBlogCategories() async {
     final response = await _get('/api/blog/category');
 
-    return response.data['items'].map((e) => BlogCategory.fromJson(e));
+    return response.data['items'].map<BlogCategory>((e) => BlogCategory.fromJson(e));
   }
 
   /// Gets a blog category by id
@@ -424,7 +424,7 @@ class JinyaClient {
 
     final response = await _get(url);
 
-    return response.data['items'].map((e) => BlogPost.fromJson(e));
+    return response.data['items'].map<BlogPost>((e) => BlogPost.fromJson(e));
   }
 
   /// Gets a blog post by id
@@ -465,7 +465,7 @@ class JinyaClient {
   Future<Iterable<BlogPostSegment>> getBlogPostSegments(int postId) async {
     final response = await _get('/api/blog/post/$postId/segment');
 
-    return response.data['items'].map((e) => BlogPostSegment.fromJson(e));
+    return response.data['items'].map<BlogPostSegment>((e) => BlogPostSegment.fromJson(e));
   }
 
   /// Batch replaces all blog post segments with the list of segments
@@ -496,7 +496,7 @@ class JinyaClient {
   Future<Iterable<File>> getFiles() async {
     final response = await _get('/api/media/file');
 
-    return response.data['items'].map((e) => File.fromJson(e));
+    return response.data['items'].map<File>((e) => File.fromJson(e));
   }
 
   /// Gets the file with the given id
@@ -542,7 +542,7 @@ class JinyaClient {
   Future<Iterable<Gallery>> getGalleries() async {
     final response = await _get('/api/media/gallery');
 
-    return response.data['items'].map((e) => Gallery.fromJson(e));
+    return response.data['items'].map<Gallery>((e) => Gallery.fromJson(e));
   }
 
   /// Gets the gallery with the given id
@@ -578,7 +578,7 @@ class JinyaClient {
   Future<Iterable<GalleryFilePosition>> getGalleryFilePositions(int galleryId) async {
     final response = await _get('/api/media/gallery/$galleryId/file');
 
-    return response.data['items'].map((e) => GalleryFilePosition.fromJson(e));
+    return response.data['items'].map<GalleryFilePosition>((e) => GalleryFilePosition.fromJson(e));
   }
 
   /// Deletes the gallery file position from the given gallery at the given position
@@ -602,7 +602,7 @@ class JinyaClient {
   Future<Iterable<Form>> getForms() async {
     final response = await _get('/api/form');
 
-    return response.data['items'].map((e) => Form.fromJson(e));
+    return response.data['items'].map<Form>((e) => Form.fromJson(e));
   }
 
   /// Gets form by id
@@ -637,7 +637,7 @@ class JinyaClient {
   Future<Iterable<FormItem>> getFormItems(int formId) async {
     final response = await _get('/api/form/$formId/item');
 
-    return response.data['items'].map((e) => FormItem.fromJson(e));
+    return response.data['items'].map<FormItem>((e) => FormItem.fromJson(e));
   }
 
   /// Deletes the form item in the given form at the given position
@@ -687,8 +687,8 @@ class JinyaClient {
   /// Gets all menus
   Future<Iterable<Menu>> getMenus() async {
     final response = await _get('/api/menu');
-
-    return response.data['items'].map((e) => Menu.fromJson(e));
+    final data = response.data['items'].map<Menu>((e) => Menu.fromJson(e));
+    return data;
   }
 
   /// Gets the menu with the given id
@@ -722,7 +722,7 @@ class JinyaClient {
   Future<Iterable<MenuItem>> getMenuItems(int menuId) async {
     final response = await _get('/api/menu/$menuId/item');
 
-    return response.data['items'].map((e) => MenuItem.fromJson(e));
+    return response.data['items'].map<MenuItem>((e) => MenuItem.fromJson(e));
   }
 
   /// Creates a new menu item with the given menu as parent
@@ -838,7 +838,7 @@ class JinyaClient {
   Future<Iterable<SimplePage>> getSimplePages() async {
     final response = await _get('/api/simple-page');
 
-    return response.data['items'].map((e) => SimplePage.fromJson(e));
+    return response.data['items'].map<SimplePage>((e) => SimplePage.fromJson(e));
   }
 
   /// Gets the simple page by id
@@ -872,7 +872,7 @@ class JinyaClient {
   Future<Iterable<SegmentPage>> getSegmentPages() async {
     final response = await _get('/api/segment-page');
 
-    return response.data['items'].map((e) => SegmentPage.fromJson(e));
+    return response.data['items'].map<SegmentPage>((e) => SegmentPage.fromJson(e));
   }
 
   /// Gets the segment page by id
@@ -905,7 +905,7 @@ class JinyaClient {
   Future<Iterable<Segment>> getSegmentsByPage(int pageId) async {
     final response = await _get('/api/segment-page/$pageId/segment');
 
-    return response.data['items'].map((e) => Segment.fromJson(e));
+    return response.data['items'].map<Segment>((e) => Segment.fromJson(e));
   }
 
   /// Creates a new segment for the given page
@@ -945,7 +945,7 @@ class JinyaClient {
   Future<Iterable<Theme>> getThemes() async {
     final response = await _get('/api/theme');
 
-    return response.data['items'].map((e) => Theme.fromJson(e));
+    return response.data['items'].map<Theme>((e) => Theme.fromJson(e));
   }
 
   /// Uploads a new theme
@@ -984,51 +984,53 @@ class JinyaClient {
   Future<Iterable<ThemeFile>> getThemeFiles(int id) async {
     final response = await _get('/api/theme/$id/file');
 
-    return response.data.keys.map((name) => ThemeFile(name: name, file: File.fromJson(response.data[name])));
+    return response.data.keys.map<ThemeFile>((name) => ThemeFile(name: name, file: File.fromJson(response.data[name])));
   }
 
   /// Gets the theme simple pages of the given theme
   Future<Iterable<ThemePage>> getThemeSimplePages(int id) async {
     final response = await _get('/api/theme/$id/page');
 
-    return response.data.keys.map((name) => ThemePage(name: name, page: SimplePage.fromJson(response.data[name])));
+    return response.data.keys
+        .map<ThemePage>((name) => ThemePage(name: name, page: SimplePage.fromJson(response.data[name])));
   }
 
   /// Gets the theme segment pages of the given theme
   Future<Iterable<ThemeSegmentPage>> getThemeSegmentPages(int id) async {
     final response = await _get('/api/theme/$id/segment-page');
 
-    return response.data.keys
-        .map((name) => ThemeSegmentPage(name: name, segmentPage: SegmentPage.fromJson(response.data[name])));
+    return response.data.keys.map<ThemeSegmentPage>(
+        (name) => ThemeSegmentPage(name: name, segmentPage: SegmentPage.fromJson(response.data[name])));
   }
 
   /// Gets the theme forms of the given theme
   Future<Iterable<ThemeForm>> getThemeForms(int id) async {
     final response = await _get('/api/theme/$id/form');
 
-    return response.data.keys.map((name) => ThemeForm(name: name, form: Form.fromJson(response.data[name])));
+    return response.data.keys.map<ThemeForm>((name) => ThemeForm(name: name, form: Form.fromJson(response.data[name])));
   }
 
   /// Gets the theme menus of the given theme
   Future<Iterable<ThemeMenu>> getThemeMenus(int id) async {
     final response = await _get('/api/theme/$id/menu');
 
-    return response.data.keys.map((name) => ThemeMenu(name: name, menu: Menu.fromJson(response.data[name])));
+    return response.data.keys.map<ThemeMenu>((name) => ThemeMenu(name: name, menu: Menu.fromJson(response.data[name])));
   }
 
   /// Gets the theme galleries of the given theme
   Future<Iterable<ThemeGallery>> getThemeGalleries(int id) async {
     final response = await _get('/api/theme/$id/gallery');
 
-    return response.data.keys.map((name) => ThemeGallery(name: name, gallery: Gallery.fromJson(response.data[name])));
+    return response.data.keys
+        .map<ThemeGallery>((name) => ThemeGallery(name: name, gallery: Gallery.fromJson(response.data[name])));
   }
 
   /// Gets the theme category of the given theme
   Future<Iterable<ThemeBlogCategory>> getThemeCategories(int id) async {
     final response = await _get('/api/theme/$id/category');
 
-    return response.data.keys
-        .map((name) => ThemeBlogCategory(name: name, blogCategory: BlogCategory.fromJson(response.data[name])));
+    return response.data.keys.map<ThemeBlogCategory>(
+        (name) => ThemeBlogCategory(name: name, blogCategory: BlogCategory.fromJson(response.data[name])));
   }
 
   /// Gets the theme configuration structure

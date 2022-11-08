@@ -1,3 +1,7 @@
+## 1.0.5
+
+- Add generic parameter to get list methods
+
 ## 1.0.4
 
 - Use correct address
