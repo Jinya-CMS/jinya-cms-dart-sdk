@@ -71,7 +71,7 @@ class JinyaClient {
     data,
   }) async {
     final response = await http.post(
-      Uri.parse('$_jinyaUrl/$path'),
+      Uri.parse('$_jinyaUrl$path'),
       headers: {
         io.HttpHeaders.contentTypeHeader: 'application/json',
         'JinyaApiKey': _apiKey,
@@ -89,7 +89,7 @@ class JinyaClient {
     data,
   }) async {
     final response = await http.put(
-      Uri.parse('$_jinyaUrl/$path'),
+      Uri.parse('$_jinyaUrl$path'),
       headers: {
         io.HttpHeaders.contentTypeHeader: 'application/json',
         'JinyaApiKey': _apiKey,
@@ -107,7 +107,7 @@ class JinyaClient {
     data,
   }) async {
     final response = await http.put(
-      Uri.parse('$_jinyaUrl/$path'),
+      Uri.parse('$_jinyaUrl$path'),
       headers: {
         'JinyaApiKey': _apiKey,
         ...additionalHeaders,
@@ -123,7 +123,7 @@ class JinyaClient {
     Map<String, String> additionalHeaders = const {},
   }) async {
     final response = await http.get(
-      Uri.parse('$_jinyaUrl/$path'),
+      Uri.parse('$_jinyaUrl$path'),
       headers: {
         io.HttpHeaders.contentTypeHeader: 'application/json',
         'JinyaApiKey': _apiKey,
@@ -139,7 +139,7 @@ class JinyaClient {
     Map<String, String> additionalHeaders = const {},
   }) async {
     final response = await http.head(
-      Uri.parse('$_jinyaUrl/$path'),
+      Uri.parse('$_jinyaUrl$path'),
       headers: {
         io.HttpHeaders.contentTypeHeader: 'application/json',
         'JinyaApiKey': _apiKey,
@@ -155,7 +155,7 @@ class JinyaClient {
     Map<String, String> additionalHeaders = const {},
   }) async {
     final response = await http.delete(
-      Uri.parse('$_jinyaUrl/$path'),
+      Uri.parse('$_jinyaUrl$path'),
       headers: {
         io.HttpHeaders.contentTypeHeader: 'application/json',
         'JinyaApiKey': _apiKey,

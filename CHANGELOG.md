@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Use correct address
+
 ## 1.0.2
 
 - Add handling for non success status codes
