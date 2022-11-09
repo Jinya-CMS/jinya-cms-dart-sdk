@@ -578,7 +578,7 @@ class JinyaClient {
   Future<Iterable<GalleryFilePosition>> getGalleryFilePositions(int galleryId) async {
     final response = await _get('/api/media/gallery/$galleryId/file');
 
-    return response.data['items'].map<GalleryFilePosition>((e) => GalleryFilePosition.fromJson(e));
+    return response.data.map<GalleryFilePosition>((e) => GalleryFilePosition.fromJson(e));
   }
 
   /// Deletes the gallery file position from the given gallery at the given position
@@ -637,7 +637,7 @@ class JinyaClient {
   Future<Iterable<FormItem>> getFormItems(int formId) async {
     final response = await _get('/api/form/$formId/item');
 
-    return response.data['items'].map<FormItem>((e) => FormItem.fromJson(e));
+    return response.data.map<FormItem>((e) => FormItem.fromJson(e));
   }
 
   /// Deletes the form item in the given form at the given position
@@ -722,7 +722,7 @@ class JinyaClient {
   Future<Iterable<MenuItem>> getMenuItems(int menuId) async {
     final response = await _get('/api/menu/$menuId/item');
 
-    return response.data['items'].map<MenuItem>((e) => MenuItem.fromJson(e));
+    return response.data.map<MenuItem>((e) => MenuItem.fromJson(e));
   }
 
   /// Creates a new menu item with the given menu as parent
@@ -905,7 +905,7 @@ class JinyaClient {
   Future<Iterable<Segment>> getSegmentsByPage(int pageId) async {
     final response = await _get('/api/segment-page/$pageId/segment');
 
-    return response.data['items'].map<Segment>((e) => Segment.fromJson(e));
+    return response.data.map<Segment>((e) => Segment.fromJson(e));
   }
 
   /// Creates a new segment for the given page

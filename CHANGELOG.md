@@ -1,3 +1,7 @@
+## 1.0.7
+
+- Fix invalid map accessor
+
 ## 1.0.6
 
 - Use dynamic type for JinyaResponse data
