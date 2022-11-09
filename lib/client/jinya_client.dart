@@ -13,7 +13,7 @@ import '../errors/conflict_exception.dart';
 import '../types/types.dart';
 
 class _JinyaResponse {
-  late Map<String, dynamic> data;
+  late dynamic data;
   int statusCode = 204;
   late http.Response response;
 

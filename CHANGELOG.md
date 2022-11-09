@@ -1,3 +1,7 @@
+## 1.0.6
+
+- Use dynamic type for JinyaResponse data
+
 ## 1.0.5
 
 - Add generic parameter to get list methods
