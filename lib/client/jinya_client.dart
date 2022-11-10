@@ -183,7 +183,7 @@ class JinyaClient {
     if (deviceCode != null) {
       response = await _post(
         '/api/login',
-        data: {username, password},
+        data: {'username': username, 'password': password},
         additionalHeaders: {'JinyaDeviceCode': deviceCode},
       );
     } else if (twoFactorCode != null) {

@@ -1,3 +1,7 @@
+## 1.0.8
+
+- Fix login with device code
+
 ## 1.0.7
 
 - Fix invalid map accessor
