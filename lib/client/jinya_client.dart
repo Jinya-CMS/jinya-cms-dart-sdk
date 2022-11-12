@@ -911,19 +911,22 @@ class JinyaClient {
   /// Creates a new segment for the given page
   Future<Segment> createSegment(int pageId, SegmentType type, Segment segment) async {
     var segmentType = '';
+    final data = segment.toJson();
     switch (type) {
       case SegmentType.file:
         segmentType = 'file';
+        data['file'] = segment.file!.id!;
         break;
       case SegmentType.gallery:
         segmentType = 'gallery';
+        data['gallery'] = segment.gallery!.id!;
         break;
       case SegmentType.html:
         segmentType = 'html';
         break;
     }
 
-    final response = await _post('/api/segment-page/$pageId/segment/$segmentType', data: segment.toJson());
+    final response = await _post('/api/segment-page/$pageId/segment/$segmentType', data: data);
 
     return Segment.fromJson(response.data);
   }
@@ -931,6 +934,11 @@ class JinyaClient {
   /// Updates the given segment at the given position
   Future<void> updateSegment(int pageId, int position, Segment segment) async {
     final data = segment.toJson();
+    if (segment.file != null) {
+      data['file'] = segment.file!.id;
+    } else if (segment.gallery != null) {
+      data['gallery'] = segment.gallery!.id;
+    }
     data['newPosition'] = segment.position;
 
     await _put('/api/segment-page/$pageId/segment/$position', data: data);

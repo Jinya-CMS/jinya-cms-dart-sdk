@@ -1,3 +1,7 @@
+## 1.0.9
+
+- Fix update and create methods for segments
+
 ## 1.0.8
 
 - Fix login with device code
