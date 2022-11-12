@@ -931,6 +931,10 @@ class JinyaClient {
     return Segment.fromJson(response.data);
   }
 
+  Future<void> moveSegment(int pageId, int oldPosition, int newPosition) async {
+    await _put('/api/segment-page/$pageId/segment/$oldPosition', data: {'newPosition': newPosition});
+  }
+
   /// Updates the given segment at the given position
   Future<void> updateSegment(int pageId, int position, Segment segment) async {
     final data = segment.toJson();
@@ -939,7 +943,6 @@ class JinyaClient {
     } else if (segment.gallery != null) {
       data['gallery'] = segment.gallery!.id;
     }
-    data['newPosition'] = segment.position;
 
     await _put('/api/segment-page/$pageId/segment/$position', data: data);
   }

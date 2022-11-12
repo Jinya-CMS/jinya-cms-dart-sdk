@@ -1,3 +1,7 @@
+## 1.0.10
+
+- Add method to move segments
+
 ## 1.0.9
 
 - Fix update and create methods for segments
