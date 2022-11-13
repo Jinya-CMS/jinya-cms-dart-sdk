@@ -1,3 +1,7 @@
+## 1.0.20
+
+- Convert list of segments to normal list
+
 ## 1.0.19
 
 - Fix mapping of blog post segments

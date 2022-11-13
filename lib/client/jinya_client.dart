@@ -490,7 +490,7 @@ class JinyaClient {
         }
 
         return data;
-      }),
+      }).toList(),
     };
 
     await _put('/api/blog/post/$postId/segment', data: postData);
