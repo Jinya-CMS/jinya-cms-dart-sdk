@@ -1,3 +1,7 @@
+## 1.0.17
+
+- Allow header image to be null
+
 ## 1.0.16
 
 - Remove parent element from blog category

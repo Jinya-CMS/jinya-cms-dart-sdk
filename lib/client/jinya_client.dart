@@ -440,7 +440,7 @@ class JinyaClient {
   Future<BlogPost> createBlogPost(
     String title,
     String slug,
-    int headerImageId,
+    int? headerImageId,
     int categoryId,
   ) async {
     final response = await _post('/api/blog/post', data: {
