@@ -25,6 +25,7 @@ class BlogCategory {
   Map<String, dynamic> toJson() {
     final data = _$BlogCategoryToJson(this);
     data['parentId'] = parent?.id;
+    data.remove('parent');
 
     return data;
   }

@@ -1,3 +1,7 @@
+## 1.0.16
+
+- Remove parent element from blog category
+
 ## 1.0.15
 
 - Use correct parent attribute in update and create
