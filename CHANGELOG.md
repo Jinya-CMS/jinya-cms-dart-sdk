@@ -1,3 +1,7 @@
+## 1.0.12
+
+- Use correct endpoint to create form items
+
 ## 1.0.11
 
 - Fix typo for deletion of form items

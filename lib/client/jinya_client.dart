@@ -659,7 +659,7 @@ class JinyaClient {
     Iterable<String> options = const <String>[],
     Iterable<String> spamFilter = const <String>[],
   }) async {
-    final response = await _post('/api/form/$formId/item/$position', data: {
+    final response = await _post('/api/form/$formId/item', data: {
       'type': type,
       'label': label,
       'placeholder': placeholder,
@@ -669,6 +669,7 @@ class JinyaClient {
       'isSubject': isSubject,
       'options': options,
       'spamFilter': spamFilter,
+      'position': position,
     });
 
     return FormItem.fromJson(response.data);
