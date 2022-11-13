@@ -406,7 +406,9 @@ class JinyaClient {
 
   /// Updates the given blog category
   Future<void> updateBlogCategory(BlogCategory blogCategory) async {
-    await _put('/api/blog/category/${blogCategory.id}', data: blogCategory.toJson());
+    final data = blogCategory.toJson();
+    data['parentId'] = blogCategory.parent?.id;
+    await _put('/api/blog/category/${blogCategory.id}', data: data);
   }
 
   /// Deletes the given blog category

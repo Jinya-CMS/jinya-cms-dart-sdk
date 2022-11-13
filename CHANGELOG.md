@@ -1,3 +1,7 @@
+## 1.0.15
+
+- Use correct parent attribute in update and create
+
 ## 1.0.14
 
 - Allow blog category to have null parent
