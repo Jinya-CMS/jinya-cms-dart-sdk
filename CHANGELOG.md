@@ -1,3 +1,7 @@
+## 1.0.14
+
+- Allow blog category to have null parent
+
 ## 1.0.13
 
 - Use correct method for form item endpoints

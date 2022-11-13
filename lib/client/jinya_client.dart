@@ -389,7 +389,7 @@ class JinyaClient {
   Future<BlogCategory> createBlogCategory(
     String name,
     String description,
-    int parentId,
+    int? parentId,
     bool webhookEnabled,
     String webhookUrl,
   ) async {
