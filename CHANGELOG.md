@@ -1,3 +1,7 @@
+## 1.0.18
+
+- Add public for creation of posts
+
 ## 1.0.17
 
 - Allow header image to be null

@@ -442,12 +442,14 @@ class JinyaClient {
     String slug,
     int? headerImageId,
     int categoryId,
+    bool public,
   ) async {
     final response = await _post('/api/blog/post', data: {
       'title': title,
       'slug': slug,
       'headerImageId': headerImageId,
       'categoryId': categoryId,
+      'public': public,
     });
 
     return BlogPost.fromJson(response.data);
