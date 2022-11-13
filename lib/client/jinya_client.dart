@@ -641,7 +641,7 @@ class JinyaClient {
   }
 
   /// Deletes the form item in the given form at the given position
-  Future<void> deleteFromItem(int formId, int position) async {
+  Future<void> deleteFormItem(int formId, int position) async {
     await _delete('/api/form/$formId/item/$position');
   }
 

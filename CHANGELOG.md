@@ -1,3 +1,7 @@
+## 1.0.11
+
+- Fix typo for deletion of form items
+
 ## 1.0.10
 
 - Add method to move segments
