@@ -481,10 +481,10 @@ class JinyaClient {
           'blogPostId': postId,
         };
         if (e.file != null) {
-          data['fileId'] = e.file!.id;
+          data['file'] = e.file!.id;
           data['link'] = e.link;
         } else if (e.gallery != null) {
-          data['galleryId'] = e.gallery!.id;
+          data['gallery '] = e.gallery!.id;
         } else {
           data['html'] = e.html ?? '';
         }

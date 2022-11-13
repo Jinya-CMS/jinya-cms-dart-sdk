@@ -1,3 +1,7 @@
+## 1.0.21
+
+- Fix generated json for batch replace segments
+
 ## 1.0.20
 
 - Convert list of segments to normal list
