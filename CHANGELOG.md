@@ -1,3 +1,7 @@
+## 1.0.13
+
+- Use correct method for form item endpoints
+
 ## 1.0.12
 
 - Use correct endpoint to create form items

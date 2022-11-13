@@ -677,12 +677,12 @@ class JinyaClient {
 
   /// Updates the given form item
   Future<void> updateFormItem(int formId, FormItem formItem) async {
-    await _post('/api/form/$formId/item/${formItem.position}', data: formItem.toJson());
+    await _put('/api/form/$formId/item/${formItem.position}', data: formItem.toJson());
   }
 
   /// Moves the form item in the given form at the given position to the new position
   Future<void> moveFormItem(int formId, int oldPosition, int newPosition) async {
-    await _post('/api/form/$formId/item/$oldPosition', data: {'newPosition': newPosition});
+    await _put('/api/form/$formId/item/$oldPosition', data: {'newPosition': newPosition});
   }
 
   /// Gets all menus
