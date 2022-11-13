@@ -469,7 +469,7 @@ class JinyaClient {
   Future<Iterable<BlogPostSegment>> getBlogPostSegments(int postId) async {
     final response = await _get('/api/blog/post/$postId/segment');
 
-    return response.data['items'].map<BlogPostSegment>((e) => BlogPostSegment.fromJson(e));
+    return response.data.map<BlogPostSegment>((e) => BlogPostSegment.fromJson(e));
   }
 
   /// Batch replaces all blog post segments with the list of segments

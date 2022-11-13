@@ -1,3 +1,7 @@
+## 1.0.19
+
+- Fix mapping of blog post segments
+
 ## 1.0.18
 
 - Add public for creation of posts
