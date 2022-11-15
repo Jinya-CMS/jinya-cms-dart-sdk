@@ -843,7 +843,7 @@ class JinyaClient {
 
   /// Moves the given menu item to the menu as the new parent
   Future<void> moveMenuItemToMenuParent(int menuId, int itemId) async {
-    await _put('/api/menu/$itemId/item/move/parent/to/menu/$menuId');
+    await _put('/api/menu/$itemId/move/parent/to/menu/$menuId');
   }
 
   /// Moves the given menu item to the new parent

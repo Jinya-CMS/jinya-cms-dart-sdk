@@ -1,3 +1,7 @@
+## 1.0.23
+
+- Use correct endpoint for moving to menu as parent
+
 ## 1.0.22
 
 - Added missing menu item related actions
