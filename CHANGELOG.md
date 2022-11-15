@@ -1,3 +1,7 @@
+## 1.0.22
+
+- Added missing menu item related actions
+
 ## 1.0.21
 
 - Fix generated json for batch replace segments

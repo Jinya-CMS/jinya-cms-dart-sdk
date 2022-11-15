@@ -809,7 +809,7 @@ class JinyaClient {
     bool? blogHomePage,
     bool? highlighted,
   }) async {
-    await _put('/api/menu-item/$itemId/item', data: {
+    await _put('/api/menu-item/$itemId', data: {
       'route': route,
       'position': position,
       'title': title,
@@ -824,6 +824,13 @@ class JinyaClient {
     });
   }
 
+  /// Moves the given menu item to the new position
+  Future<void> moveMenuItem(int itemId, int position) async {
+    await _put('/api/menu-item/$itemId', data: {
+      'position': position,
+    });
+  }
+
   /// Deletes the given menu item
   Future<void> deleteMenuItem(int itemId) async {
     await _delete('/api/menu-item/$itemId');
@@ -832,6 +839,11 @@ class JinyaClient {
   /// Moves the given menu item one level up in the menu tree
   Future<void> moveMenuItemParentOneLevelUp(int menuId, int itemId) async {
     await _put('/api/menu/$menuId/item/$itemId/move/parent/one/level/up');
+  }
+
+  /// Moves the given menu item to the menu as the new parent
+  Future<void> moveMenuItemToMenuParent(int menuId, int itemId) async {
+    await _put('/api/menu/$itemId/item/move/parent/to/menu/$menuId');
   }
 
   /// Moves the given menu item to the new parent
