@@ -1,3 +1,7 @@
+## 1.0.24
+
+- Use correct type mapping for theme configuration and description
+
 ## 1.0.23
 
 - Use correct endpoint for moving to menu as parent

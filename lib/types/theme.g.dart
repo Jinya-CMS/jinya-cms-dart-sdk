@@ -14,7 +14,9 @@ Theme _$ThemeFromJson(Map<String, dynamic> json) => Theme(
         (k, e) => MapEntry(k, e as String),
       ),
       name: json['name'] as String?,
-      description: json['description'] as String?,
+      description: (json['description'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
       id: json['id'] as int?,
     );
 
@@ -99,7 +101,9 @@ ThemeConfigurationGroup _$ThemeConfigurationGroupFromJson(
         Map<String, dynamic> json) =>
     ThemeConfigurationGroup(
       name: json['name'] as String?,
-      title: json['title'] as String?,
+      title: (json['title'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
       fields: (json['fields'] as List<dynamic>?)?.map(
           (e) => ThemeConfigurationField.fromJson(e as Map<String, dynamic>)),
     );
@@ -109,13 +113,17 @@ ThemeConfigurationField _$ThemeConfigurationFieldFromJson(
     ThemeConfigurationField(
       name: json['name'] as String?,
       type: json['type'] as String?,
-      label: json['label'] as String?,
+      label: (json['label'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
     );
 
 ThemeConfigurationStructure _$ThemeConfigurationStructureFromJson(
         Map<String, dynamic> json) =>
     ThemeConfigurationStructure(
-      title: json['title'] as String?,
+      title: (json['title'] as Map<String, dynamic>?)?.map(
+        (k, e) => MapEntry(k, e as String),
+      ),
       groups: (json['groups'] as List<dynamic>?)?.map(
           (e) => ThemeConfigurationGroup.fromJson(e as Map<String, dynamic>)),
       links: json['links'] == null

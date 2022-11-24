@@ -15,7 +15,7 @@ class Theme {
   Map<String, Map<String, dynamic>>? configuration;
   Map<String, String>? scssVariables;
   String? name;
-  String? description;
+  Map<String, String>? description;
   int? id;
 
   Theme({
@@ -120,7 +120,7 @@ class ThemeConfigurationLinks {
 @JsonSerializable(createToJson: false)
 class ThemeConfigurationGroup {
   String? name;
-  String? title;
+  Map<String, String>? title;
   Iterable<ThemeConfigurationField>? fields;
 
   ThemeConfigurationGroup({this.name, this.title, this.fields});
@@ -132,7 +132,7 @@ class ThemeConfigurationGroup {
 class ThemeConfigurationField {
   String? name;
   String? type;
-  String? label;
+  Map<String, String>? label;
 
   ThemeConfigurationField({this.name, this.type, this.label});
 
@@ -141,11 +141,12 @@ class ThemeConfigurationField {
 
 @JsonSerializable(createToJson: false)
 class ThemeConfigurationStructure {
-  String? title;
+  Map<String, String>? title;
   Iterable<ThemeConfigurationGroup>? groups;
   ThemeConfigurationLinks? links;
 
   ThemeConfigurationStructure({this.title, this.groups, this.links});
 
-  factory ThemeConfigurationStructure.fromJson(Map<String, dynamic> json) => _$ThemeConfigurationStructureFromJson(json);
+  factory ThemeConfigurationStructure.fromJson(Map<String, dynamic> json) =>
+      _$ThemeConfigurationStructureFromJson(json);
 }
