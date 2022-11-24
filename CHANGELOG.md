@@ -1,3 +1,7 @@
+## 1.0.33
+
+- Fix missing build_runner execution
+
 ## 1.0.32
 
 - Use modern way of theme labeling

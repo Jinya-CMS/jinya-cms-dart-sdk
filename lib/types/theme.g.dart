@@ -76,25 +76,25 @@ ThemeConfigurationLinks _$ThemeConfigurationLinksFromJson(
         Map<String, dynamic> json) =>
     ThemeConfigurationLinks(
       segmentPages: (json['segment_pages'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
+        (k, e) => MapEntry(k, Map<String, String>.from(e as Map)),
       ),
       menus: (json['menus'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
+        (k, e) => MapEntry(k, Map<String, String>.from(e as Map)),
       ),
       pages: (json['pages'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
+        (k, e) => MapEntry(k, Map<String, String>.from(e as Map)),
       ),
       forms: (json['forms'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
+        (k, e) => MapEntry(k, Map<String, String>.from(e as Map)),
       ),
       galleries: (json['galleries'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
+        (k, e) => MapEntry(k, Map<String, String>.from(e as Map)),
       ),
       files: (json['files'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
+        (k, e) => MapEntry(k, Map<String, String>.from(e as Map)),
       ),
       blogCategories: (json['blog_categories'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, e as String),
+        (k, e) => MapEntry(k, Map<String, String>.from(e as Map)),
       ),
     );
 
