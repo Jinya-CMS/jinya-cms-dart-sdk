@@ -1,3 +1,7 @@
+## 1.0.25
+
+- Add missing displayName attribute
+
 ## 1.0.24
 
 - Use correct type mapping for theme configuration and description

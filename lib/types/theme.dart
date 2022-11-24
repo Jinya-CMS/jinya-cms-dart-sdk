@@ -15,6 +15,7 @@ class Theme {
   Map<String, Map<String, dynamic>>? configuration;
   Map<String, String>? scssVariables;
   String? name;
+  String? displayName;
   Map<String, String>? description;
   int? id;
 
@@ -22,6 +23,7 @@ class Theme {
     this.configuration,
     this.scssVariables,
     this.name,
+    this.displayName,
     this.description,
     this.id,
   });

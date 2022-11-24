@@ -14,6 +14,7 @@ Theme _$ThemeFromJson(Map<String, dynamic> json) => Theme(
         (k, e) => MapEntry(k, e as String),
       ),
       name: json['name'] as String?,
+      displayName: json['displayName'] as String?,
       description: (json['description'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),
       ),
