@@ -1,3 +1,7 @@
+## 1.0.32
+
+- Use modern way of theme labeling
+
 ## 1.0.31
 
 - Updated code to retrieve default configuration of themes

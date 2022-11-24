@@ -104,14 +104,14 @@ class ThemeSegmentPage {
 @JsonSerializable(createToJson: false)
 class ThemeConfigurationLinks {
   @JsonKey(name: 'segment_pages')
-  Map<String, String>? segmentPages;
-  Map<String, String>? menus;
-  Map<String, String>? pages;
-  Map<String, String>? forms;
-  Map<String, String>? galleries;
-  Map<String, String>? files;
+  Map<String, Map<String, String>>? segmentPages;
+  Map<String, Map<String, String>>? menus;
+  Map<String, Map<String, String>>? pages;
+  Map<String, Map<String, String>>? forms;
+  Map<String, Map<String, String>>? galleries;
+  Map<String, Map<String, String>>? files;
   @JsonKey(name: 'blog_categories')
-  Map<String, String>? blogCategories;
+  Map<String, Map<String, String>>? blogCategories;
 
   ThemeConfigurationLinks(
       {this.segmentPages, this.menus, this.pages, this.forms, this.galleries, this.files, this.blogCategories});
