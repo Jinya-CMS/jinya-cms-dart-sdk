@@ -1,3 +1,7 @@
+## 1.0.30
+
+- Encode menu by hand in update
+
 ## 1.0.29
 
 - Made menu logo nullable

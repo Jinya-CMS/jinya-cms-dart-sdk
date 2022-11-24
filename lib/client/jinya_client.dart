@@ -715,7 +715,10 @@ class JinyaClient {
 
   /// Updates the given menu
   Future<void> updateMenu(Menu menu) async {
-    await _put('/api/menu/${menu.id}', data: menu.toJson());
+    await _put('/api/menu/${menu.id}', data: {
+      'logo': menu.logo?.id,
+      'name': menu.name,
+    });
   }
 
   /// Deletes the given menu
