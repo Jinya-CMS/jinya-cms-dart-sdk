@@ -1,3 +1,7 @@
+## 1.0.29
+
+- Made menu logo nullable
+
 ## 1.0.28
 
 - Fix data for update styling

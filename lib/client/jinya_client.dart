@@ -704,7 +704,7 @@ class JinyaClient {
   }
 
   /// Creates a new menu with the given data
-  Future<Menu> createMenu(String name, int logoId) async {
+  Future<Menu> createMenu(String name, int? logoId) async {
     final response = await _post('/api/menu', data: {
       'name': name,
       'logo': logoId,
