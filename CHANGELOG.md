@@ -1,3 +1,7 @@
+## 1.0.26
+
+- Fixed mapping of style variables
+
 ## 1.0.25
 
 - Add missing displayName attribute

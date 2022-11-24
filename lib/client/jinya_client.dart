@@ -1000,7 +1000,7 @@ class JinyaClient {
   Future<Map<String, String>> getStyleVariables(int id) async {
     final response = await _get('/api/theme/$id/styling');
 
-    return response.data.cast();
+    return response.data.map((key, value) => MapEntry(key.toString(), value.toString()));
   }
 
   /// Updates the style variables for the given theme
@@ -1072,6 +1072,6 @@ class JinyaClient {
   Future<Map<String, Map<String, dynamic>>> getThemeDefaultConfiguration(int id) async {
     final response = await _get('/api/theme/$id/configuration/structure');
 
-    return response.data.cast();
+    return response.data.map((key, value) => MapEntry(key.toString(), value));
   }
 }
