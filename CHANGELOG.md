@@ -1,3 +1,7 @@
+## 1.0.31
+
+- Updated code to retrieve default configuration of themes
+
 ## 1.0.30
 
 - Encode menu by hand in update

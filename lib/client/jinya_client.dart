@@ -5,11 +5,11 @@ import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 
-import '../errors/missing_field_exception.dart';
-import '../errors/missing_api_key_exception.dart';
-import '../errors/not_found_exception.dart';
-import '../errors/not_enough_permissions_exception.dart';
 import '../errors/conflict_exception.dart';
+import '../errors/missing_api_key_exception.dart';
+import '../errors/missing_field_exception.dart';
+import '../errors/not_enough_permissions_exception.dart';
+import '../errors/not_found_exception.dart';
 import '../types/types.dart';
 
 class _JinyaResponse {
@@ -1077,8 +1077,16 @@ class JinyaClient {
 
   /// Gets the default configuration for the theme
   Future<Map<String, Map<String, dynamic>>> getThemeDefaultConfiguration(int id) async {
-    final response = await _get('/api/theme/$id/configuration/structure');
+    final response = await _get('/api/theme/$id/configuration/default');
+    final Map<String, Map<String, dynamic>> map = {};
+    for (var group in (response.data as Map<String, dynamic>).keys) {
+      final mapGroup = response.data[group] as Map<String, dynamic>;
+      map[group] = <String, dynamic>{};
+      for (var field in mapGroup.keys) {
+        map[group]![field] = mapGroup[field];
+      }
+    }
 
-    return response.data.map((key, value) => MapEntry(key.toString(), value));
+    return map;
   }
 }
