@@ -1,3 +1,11 @@
+## 1.0.28
+
+- Fix data for update styling
+
+## 1.0.27
+
+- Manually create new map and fill it with the style variables
+
 ## 1.0.26
 
 - Fixed mapping of style variables

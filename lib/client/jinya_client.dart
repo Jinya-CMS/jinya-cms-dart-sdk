@@ -999,13 +999,17 @@ class JinyaClient {
   /// Gets the style variables for the given theme
   Future<Map<String, String>> getStyleVariables(int id) async {
     final response = await _get('/api/theme/$id/styling');
+    final Map<String, String> map = {};
+    for (var item in response.data.keys) {
+      map[item.toString()] = response.data[item].toString();
+    }
 
-    return response.data.map((key, value) => MapEntry(key.toString(), value.toString()));
+    return map;
   }
 
   /// Updates the style variables for the given theme
   Future<void> updateStyleVariables(int id, Map<String, String> variables) async {
-    await _put('/api/theme/$id/styling', data: variables);
+    await _put('/api/theme/$id/styling', data: {'variables': variables});
   }
 
   /// Gets the theme files of the given theme
