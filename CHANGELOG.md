@@ -1,3 +1,7 @@
+## 1.0.35
+
+- Fixed http methods for theme
+
 ## 1.0.34
 
 - Added code to update configuration

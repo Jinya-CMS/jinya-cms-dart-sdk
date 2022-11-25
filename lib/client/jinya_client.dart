@@ -991,12 +991,12 @@ class JinyaClient {
 
   /// Activates the given theme
   Future<void> activateTheme(int id) async {
-    await _post('/api/theme/$id/active');
+    await _put('/api/theme/$id/active');
   }
 
   /// Compiles the given theme
   Future<void> compileTheme(int id) async {
-    await _post('/api/theme/$id/assets');
+    await _put('/api/theme/$id/assets');
   }
 
   /// Gets the style variables for the given theme
