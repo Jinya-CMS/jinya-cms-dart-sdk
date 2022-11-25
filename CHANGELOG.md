@@ -1,3 +1,7 @@
+## 1.0.34
+
+- Added code to update configuration
+
 ## 1.0.33
 
 - Fix missing build_runner execution

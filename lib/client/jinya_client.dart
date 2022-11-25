@@ -1089,4 +1089,9 @@ class JinyaClient {
 
     return map;
   }
+
+  /// Updates the configuration for the given theme
+  Future<void> updateConfiguration(int id, Map<String, Map<String, dynamic>> configuration) async {
+    await _put('/api/theme/$id/configuration', data: {'configuration': configuration});
+  }
 }
