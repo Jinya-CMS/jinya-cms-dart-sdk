@@ -1,3 +1,7 @@
+## 1.0.36
+
+- Added missing endpoints for theme links
+
 ## 1.0.35
 
 - Fixed http methods for theme

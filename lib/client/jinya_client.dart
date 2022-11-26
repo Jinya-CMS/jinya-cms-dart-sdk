@@ -1068,6 +1068,41 @@ class JinyaClient {
         (name) => ThemeBlogCategory(name: name, blogCategory: BlogCategory.fromJson(response.data[name])));
   }
 
+  /// Updates the theme file for the given field and theme with the given file
+  Future<void> updateThemeFile(int themeId, String field, int fileId) async {
+    await _put('/api/theme/$themeId/file/$field', data: {'file': fileId});
+  }
+
+  /// Updates the theme simple page for the given field and theme with the given simple page
+  Future<void> updateThemeSimplePage(int themeId, String field, int simplePageId) async {
+    await _put('/api/theme/$themeId/page/$field', data: {'page': simplePageId});
+  }
+
+  /// Updates the theme segment page for the given field and theme with the given segment page
+  Future<void> updateThemeSegmentPage(int themeId, String field, int segmentPageId) async {
+    await _put('/api/theme/$themeId/segment-page/$field', data: {'segmentPage': segmentPageId});
+  }
+
+  /// Updates the theme form for the given field and theme with the given form
+  Future<void> updateThemeForm(int themeId, String field, int formId) async {
+    await _put('/api/theme/$themeId/form/$field', data: {'form': formId});
+  }
+
+  /// Updates the theme menu for the given field and theme with the given menu
+  Future<void> updateThemeMenu(int themeId, String field, int menuId) async {
+    await _put('/api/theme/$themeId/menu/$field', data: {'menu': menuId});
+  }
+
+  /// Updates the theme gallery for the given field and theme with the given gallery
+  Future<void> updateThemeGallery(int themeId, String field, int galleryId) async {
+    await _put('/api/theme/$themeId/gallery/$field', data: {'gallery': galleryId});
+  }
+
+  /// Updates the theme category for the given field and theme with the given category
+  Future<void> updateThemeCategory(int themeId, String field, int categoryId) async {
+    await _put('/api/theme/$themeId/category/$field', data: {'category': categoryId});
+  }
+
   /// Gets the theme configuration structure
   Future<ThemeConfigurationStructure> getThemeConfigurationStructure(int id) async {
     final response = await _get('/api/theme/$id/configuration/structure');
