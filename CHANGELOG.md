@@ -1,3 +1,7 @@
+## 1.0.27
+
+- Added missing enabled field in artist
+
 ## 1.0.36
 
 - Added missing endpoints for theme links

@@ -21,6 +21,7 @@ class Artist {
   String? aboutMe;
   List<String>? roles;
   ColorScheme? colorScheme;
+  bool? enabled;
 
   Artist({
     this.id,
@@ -28,6 +29,7 @@ class Artist {
     this.email,
     this.profilePicture,
     this.roles,
+    this.enabled,
   });
 
   factory Artist.fromJson(Map<String, dynamic> json) => _$ArtistFromJson(json);

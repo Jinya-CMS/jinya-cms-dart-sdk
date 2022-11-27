@@ -13,6 +13,7 @@ Artist _$ArtistFromJson(Map<String, dynamic> json) => Artist(
       profilePicture: json['profilePicture'] as String?,
       roles:
           (json['roles'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      enabled: json['enabled'] as bool?,
     )
       ..aboutMe = json['aboutMe'] as String?
       ..colorScheme =
@@ -26,6 +27,7 @@ Map<String, dynamic> _$ArtistToJson(Artist instance) => <String, dynamic>{
       'aboutMe': instance.aboutMe,
       'roles': instance.roles,
       'colorScheme': _$ColorSchemeEnumMap[instance.colorScheme],
+      'enabled': instance.enabled,
     };
 
 const _$ColorSchemeEnumMap = {
