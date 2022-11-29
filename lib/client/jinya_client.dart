@@ -318,7 +318,12 @@ class JinyaClient {
 
   /// Updates the given artist
   Future<void> updateArtist(Artist artist) async {
-    await _put('/api/artist/${artist.id}');
+    await _put('/api/artist/${artist.id}', data: artist.toJson());
+  }
+
+  /// Sets the artists password
+  Future<void> changePasswordAdmin(int artistId, String password) async {
+    await _put('/api/artist/$artistId', data: {'password': password});
   }
 
   /// Deletes the given artist by id

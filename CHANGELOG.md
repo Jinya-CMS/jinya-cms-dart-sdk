@@ -1,4 +1,8 @@
-## 1.0.27
+## 1.0.38
+
+- Fixed artist endpoints
+
+## 1.0.37
 
 - Added missing enabled field in artist
 
