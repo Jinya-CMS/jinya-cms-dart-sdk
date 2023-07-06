@@ -1,13 +1,13 @@
 name: jinya_cms_api
 description: Implementation of the Jinya CMS API written in Dart for use with Flutter and other Dart apps
-version: 1.0.38
+version: 2.0.0
 homepage: https://gitlab.imanuel.dev/jinya-cms/jinya-cms-dart-sdk
 
 environment:
-  sdk: '>=2.17.7 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  http: ^0.13.5
+  http: ^1.1.0
   json_annotation: ^4.7.0
 
 dev_dependencies:
