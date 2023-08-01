@@ -8,9 +8,9 @@ environment:
 
 dependencies:
   http: ^1.1.0
-  json_annotation: ^4.7.0
+  json_annotation: ^4.8.1
 
 dev_dependencies:
-  lints: ^2.0.1
-  json_serializable: 6.5.4
-  build_runner: 2.3.2
+  lints: ^2.1.1
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.6
