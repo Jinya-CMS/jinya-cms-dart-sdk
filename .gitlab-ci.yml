@@ -3,7 +3,7 @@ stages:
 
 lint:
   stage: lint
-  image: quay.imanuel.dev/dockerhub/library---dart:sdk
+  image: harbor.ulbricht.casa/proxy/library/dart:sdk
   script:
     - dart pub install
     - dart analyze .
