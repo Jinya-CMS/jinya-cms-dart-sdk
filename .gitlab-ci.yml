@@ -3,7 +3,7 @@ stages:
 
 lint:
   stage: lint
-  image: harbor.ulbricht.casa/proxy/library/dart:sdk
+  image: library/dart:sdk
   script:
     - dart pub install
     - dart analyze .
