@@ -3,7 +3,7 @@ stages:
 
 lint:
   stage: lint
-  image: library/dart:sdk
+  image: $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX/library/dart:sdk
   script:
     - dart pub install
     - dart analyze .
